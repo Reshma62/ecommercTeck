@@ -13,11 +13,11 @@ const createCategory = async (req, res) => {
   } = req.body;
 
   if (!name) {
-    res.send({ error: " Category name is required" });
+   return res.send({ error: " Category name is required" });
   } else {
     let duplicateCategory = await Category.find({ name });
     if (duplicateCategory.length > 0) {
-      res.send({ error: " Category  is already exists" });
+     return res.send({ error: " Category  is already exists" });
     } else {
       const category = new Category({
         name,
@@ -47,11 +47,11 @@ const createSubCategory = async (req, res) => {
   } = req.body;
 
   if (!name) {
-    res.send({ error: "Sub Category name is required" });
+    return res.send({ error: "Sub Category name is required" });
   } else {
     let duplicateSubCategory = await SubCategory.find({ name });
     if (duplicateSubCategory.length > 0) {
-      res.send({ error: "Sub Category  is already exists" });
+     return res.send({ error: "Sub Category  is already exists" });
     } else {
       const subCategory = new SubCategory({
         name,
