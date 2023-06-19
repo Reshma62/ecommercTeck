@@ -1,9 +1,9 @@
 const {
   emailValidation,
   passwordValidation,
-} = require("../../helpers/validation");
+} = require("../helpers/validation");
 const bcrypt = require("bcrypt");
-const User = require("../../models/userModels.js");
+const User = require("../models/userModels.js");
 const loginController = async (req, res) => {
   const { email, password } = req.body;
 

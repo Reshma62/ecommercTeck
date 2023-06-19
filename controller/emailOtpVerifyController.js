@@ -1,4 +1,4 @@
-const User = require("../../models/userModels.js");
+const User = require("../models/userModels.js");
 
 const emailOtpVefiryMatch = async (req, res) => {
   const { Otp, email } = req.body;

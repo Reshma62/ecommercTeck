@@ -1,12 +1,12 @@
 const {
   emailValidation,
   passwordValidation,
-} = require("../../helpers/validation");
+} = require("../helpers/validation");
 const bcrypt = require("bcrypt");
-const User = require("../../models/userModels.js");
-const emailVerification = require("../../helpers/emailVerification");
-const otpGenarator = require("../../helpers/otp");
-const emailTemplate = require("../../helpers/emailTemplate");
+const User = require("../models/userModels.js");
+const emailVerification = require("../helpers/emailVerification");
+const otpGenarator = require("../helpers/otp");
+const emailTemplate = require("../helpers/emailTemplate");
 const registationControll = async (req, res) => {
   const {
     fullName,
@@ -76,13 +76,13 @@ const registationControll = async (req, res) => {
         { $set: { OTP: randomOtp } },
         { new: true }
       );
-      setTimeout(async() => {
-        console.log( "Otp removed" )
-         let otpRemove = await User.findOneAndUpdate(
-        { email },
-        { $unset: { OTP: "" } },
-        { new: true }
-      );
+      setTimeout(async () => {
+        console.log("Otp removed");
+        let otpRemove = await User.findOneAndUpdate(
+          { email },
+          { $unset: { OTP: "" } },
+          { new: true }
+        );
       }, 10000000);
 
       return res.json({ success: "Registation successfull" });
