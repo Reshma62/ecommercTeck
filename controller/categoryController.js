@@ -13,11 +13,11 @@ const createCategory = async (req, res) => {
   } = req.body;
 
   if (!name) {
-   return res.send({ error: " Category name is required" });
+    return res.send({ error: " Category name is required" });
   } else {
     let duplicateCategory = await Category.find({ name });
     if (duplicateCategory.length > 0) {
-     return res.send({ error: " Category  is already exists" });
+      return res.send({ error: " Category  is already exists" });
     } else {
       const category = new Category({
         name,
@@ -33,6 +33,23 @@ const createCategory = async (req, res) => {
       res.send({ success: " Category created successfully" });
     }
   }
+};
+const categoryStatus = async (req, res) => {
+  const { name, status } = req.body;
+  if (status == "waiting" || status == "rejected") {
+    await Category.findOneAndUpdate(
+      { name },
+      { isActive: false, status },
+      { new: true }
+    );
+  } else if (status == "approved") {
+    await Category.findOneAndUpdate(
+      { name },
+      { isActive: true, status },
+      { new: true }
+    );
+  }
+  res.send({ success: "  Category Status Updated successfully" });
 };
 
 const createSubCategory = async (req, res) => {
@@ -51,7 +68,7 @@ const createSubCategory = async (req, res) => {
   } else {
     let duplicateSubCategory = await SubCategory.find({ name });
     if (duplicateSubCategory.length > 0) {
-     return res.send({ error: "Sub Category  is already exists" });
+      return res.send({ error: "Sub Category  is already exists" });
     } else {
       const subCategory = new SubCategory({
         name,
@@ -74,6 +91,24 @@ const createSubCategory = async (req, res) => {
   }
 };
 
+const subCategoryStatus = async (req, res) => {
+  const { name, status } = req.body;
+  if (status == "waiting" || status == "rejected") {
+    await SubCategory.findOneAndUpdate(
+      { name },
+      { isActive: false, status },
+      { new: true }
+    );
+  } else if (status == "approved") {
+    await SubCategory.findOneAndUpdate(
+      { name },
+      { isActive: true, status },
+      { new: true }
+    );
+  }
+  res.send({ success: " Sub Category Status Updated successfully" });
+};
+
 const getAllCategory = async (req, res) => {
   let allCategory = await Category.find({}).populate("subCategory");
   res.send(allCategory);
@@ -87,4 +122,6 @@ module.exports = {
   createSubCategory,
   getAllCategory,
   getAllSubCategory,
+  categoryStatus,
+  subCategoryStatus,
 };

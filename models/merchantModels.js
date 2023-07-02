@@ -19,6 +19,11 @@ const storeSchema = new Schema({
     type: String,
     required: true,
   },
+  status: {
+    type: String,
+    default: "waiting",
+    enum: ["waiting", " rejected", "approved"],
+  },
   owner: {
     type: Schema.Types.ObjectId,
     ref: "User",
@@ -38,4 +43,4 @@ const storeSchema = new Schema({
     type: Date,
   },
 });
-module.exports= mongoose.model("Store", storeSchema)
+module.exports = mongoose.model("Store", storeSchema);
