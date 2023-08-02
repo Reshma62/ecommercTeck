@@ -59,7 +59,7 @@ const createProduct = async (req, res) => {
 const createVariant = async (req, res) => {
   const { color, size, ram, storage, image, quantity, price, product } =
     req.body;
-
+  // console.log(req.file.filename);
   if (!product) {
     return res.send({ error: "Producet is required" });
   } else {
@@ -68,7 +68,7 @@ const createVariant = async (req, res) => {
       size,
       ram,
       storage,
-      image,
+      image: `${process.env.IMAGE_PATH}/uploads/${req.file.filename}`,
       quantity,
       price,
       product,
